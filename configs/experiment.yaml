@@ -1,0 +1,11 @@
+schema_version: 1
+model: model.gemma-270m.yaml
+lens_path: ../lenses/gemma-3-270m-it-dev/lens.pt
+output_dir: ../artifacts
+name: capital-of-france
+messages:
+  - role: user
+    content: "What is the capital of France? Answer with one word."
+prompt_positions: [-1]
+layer_count: 8
+max_new_tokens: 64

@@ -1,0 +1,44 @@
+[project]
+name = "slm-jspace-viewer"
+version = "0.1.0"
+description = "Offline viewer and reproducible artifact pipeline for Gemma Jacobian-lens experiments."
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+  "datasets>=4.0",
+  "numpy>=2.0",
+  "plotly>=6.0",
+  "pyyaml>=6.0",
+  "safetensors>=0.5",
+  "streamlit>=1.45",
+  "torch>=2.6",
+  "transformers>=5.5",
+  "typer>=0.15",
+  "zarr>=3.0",
+  "jlens @ git+https://github.com/anthropics/jacobian-lens.git",
+]
+
+[project.scripts]
+jspace = "slm_jspace.cli:app"
+
+[dependency-groups]
+dev = ["pytest>=8.3", "pytest-cov>=6.0", "ruff>=0.11"]
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/slm_jspace"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = [".uv-cache", ".uv-python", ".venv"]

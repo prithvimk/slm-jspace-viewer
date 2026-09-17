@@ -1,0 +1,11 @@
+schema_version: 1
+model: model.gemma-270m.yaml
+output_dir: ../lenses/gemma-3-270m-it-dev
+dataset: HuggingFaceFW/fineweb
+dataset_config: sample-10BT
+split: train
+seed: 42
+prompt_count: 5
+sequence_length: 128
+layer_count: 8
+dim_batch: 1
