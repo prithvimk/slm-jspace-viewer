@@ -11,6 +11,17 @@ def evenly_spaced_layers(layer_total: int, requested: int = 8) -> list[int]:
     return sorted({round(index * (layer_total - 1) / (requested - 1)) for index in range(requested)}) if requested > 1 else [0]
 
 
+def jacobian_source_layers(layer_total: int, requested: int = 8) -> list[int]:
+    """Choose source blocks strictly before the final target block.
+
+    ``jlens.fit`` transports every source residual into the basis of its final
+    block, so its source layer indices must satisfy ``source < target``.
+    """
+    if layer_total < 2:
+        raise ValueError("A Jacobian lens requires at least two transformer blocks")
+    return evenly_spaced_layers(layer_total - 1, requested)
+
+
 def resolve_positions(prompt_length: int, total_length: int, configured: list[int]) -> list[int]:
     positions: list[int] = []
     for position in configured:

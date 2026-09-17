@@ -42,7 +42,7 @@ def load_model(config: ModelConfig) -> LoadedModel:
 
     tokenizer = AutoTokenizer.from_pretrained(config.model_id, revision=config.tokenizer_revision)
     model = AutoModelForCausalLM.from_pretrained(
-        config.model_id, revision=config.revision, torch_dtype=_torch_dtype(config.dtype), device_map=config.device_map,
+        config.model_id, revision=config.revision, dtype=_torch_dtype(config.dtype), device_map=config.device_map,
     ).eval()
     return LoadedModel(model=model, tokenizer=tokenizer, config=config)
 

@@ -27,3 +27,6 @@ uv run jspace view artifacts/<experiment-id>
 
 Artifacts store dense scores for every configured layer and position so they
 can be explored without CUDA or model weights.
+
+The Jacobian lens always reserves the final transformer block as its target;
+configured source layers are chosen evenly from the preceding blocks.

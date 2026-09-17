@@ -13,7 +13,7 @@ from .artifacts import write_artifact
 from .config import ExperimentConfig, LensFitConfig, ModelConfig
 from .lenses import JacobianLens, LogitLens
 from .modeling import capture_residuals, greedy_generate, jlens_adapter, load_model
-from .selection import evenly_spaced_layers, resolve_positions
+from .selection import jacobian_source_layers, resolve_positions
 
 
 def _git_revision() -> str | None:
@@ -41,7 +41,7 @@ def smoke_test(model_path: str | Path) -> dict[str, Any]:
     loaded = load_model(config)
     rendered = loaded.render_messages([{"role": "user", "content": "Reply with the word: ready"}])
     ids = loaded.tokenizer(rendered, return_tensors="pt").input_ids
-    layers = evenly_spaced_layers(loaded.layer_total)
+    layers = jacobian_source_layers(loaded.layer_total)
     residuals, logits = capture_residuals(loaded, ids, layers)
     adapter = jlens_adapter(loaded)
     return {
@@ -80,7 +80,7 @@ def fit_lens(config_path: str | Path) -> Path:
     model_config = ModelConfig.load(config.model)
     loaded = load_model(model_config)
     prompts, corpus_hash = _fineweb_prompts(config, loaded.tokenizer)
-    layers = evenly_spaced_layers(loaded.layer_total, config.layer_count)
+    layers = jacobian_source_layers(loaded.layer_total, config.layer_count)
     output = config.output_dir
     output.mkdir(parents=True, exist_ok=True)
     lens_path = output / "lens.pt"
@@ -109,7 +109,7 @@ def run_experiment(config_path: str | Path) -> Path:
     rendered = loaded.render_messages(config.messages)
     prompt_ids = loaded.tokenizer(rendered, return_tensors="pt").input_ids
     sequence = greedy_generate(loaded, prompt_ids, config.max_new_tokens)
-    layers = evenly_spaced_layers(loaded.layer_total, config.layer_count)
+    layers = jacobian_source_layers(loaded.layer_total, config.layer_count)
     residuals, _ = capture_residuals(loaded, sequence.unsqueeze(0), layers)
     positions = resolve_positions(prompt_ids.shape[-1], sequence.shape[-1], config.prompt_positions)
     selected = residuals[:, positions, :]

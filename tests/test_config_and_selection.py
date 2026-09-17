@@ -3,11 +3,15 @@ from pathlib import Path
 import pytest
 
 from slm_jspace.config import ConfigError, ExperimentConfig
-from slm_jspace.selection import evenly_spaced_layers, resolve_positions
+from slm_jspace.selection import evenly_spaced_layers, jacobian_source_layers, resolve_positions
 
 
 def test_evenly_spaced_layers_includes_both_ends() -> None:
     assert evenly_spaced_layers(18, 8) == [0, 2, 5, 7, 10, 12, 15, 17]
+
+
+def test_jacobian_sources_exclude_final_target_layer() -> None:
+    assert jacobian_source_layers(18, 8) == [0, 2, 5, 7, 9, 11, 14, 16]
 
 
 def test_positions_include_selected_prompt_and_every_generated() -> None:
