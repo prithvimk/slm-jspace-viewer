@@ -1,0 +1,11 @@
+schema_version: 1
+model: model.qwen-0.5b.yaml
+output_dir: ../lenses/qwen2.5-0.5b-tutorial
+dataset: HuggingFaceFW/fineweb
+dataset_config: sample-10BT
+split: train
+seed: 42
+prompt_count: 5
+sequence_length: 64
+layer_count: 4
+dim_batch: 1

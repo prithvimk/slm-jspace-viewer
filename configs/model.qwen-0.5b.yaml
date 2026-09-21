@@ -1,0 +1,8 @@
+schema_version: 1
+model_id: Qwen/Qwen2.5-0.5B-Instruct
+revision: main
+tokenizer_revision: main
+dtype: bfloat16
+device_map: auto
+use_chat_template: true
+system_prompt: "You are a concise, careful assistant."

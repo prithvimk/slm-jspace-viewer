@@ -30,3 +30,10 @@ can be explored without CUDA or model weights.
 
 The Jacobian lens always reserves the final transformer block as its target;
 configured source layers are chosen evenly from the preceding blocks.
+
+## Colab mini-course
+
+The public, free-T4 tutorial course is documented in [tutorials/README.md](tutorials/README.md).
+It introduces visible reasoning, residual streams, the logit lens, the
+Jacobian lens, and compact J-space artifacts without requiring a Hugging Face
+login on its default path.
