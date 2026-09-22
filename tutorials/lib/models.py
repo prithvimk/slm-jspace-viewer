@@ -15,15 +15,24 @@ class TutorialModel:
 
 
 def load_tutorial_model(model_id: str = DEFAULT_MODEL_ID) -> TutorialModel:
-    """Load the anonymous Qwen default on CUDA when available."""
+    """Load the anonymous Qwen default using the active Colab-friendly dtype."""
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
     has_cuda = torch.cuda.is_available()
+    # T4 is a Turing GPU (compute capability 7.5) and accelerates FP16, not
+    # BF16. Ampere and later GPUs natively accelerate BF16 Tensor Core work.
+    dtype = (
+        torch.bfloat16
+        if has_cuda and torch.cuda.get_device_capability()[0] >= 8
+        else torch.float16
+        if has_cuda
+        else torch.float32
+    )
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(
         model_id,
-        dtype=torch.bfloat16 if has_cuda else torch.float32,
+        dtype=dtype,
         device_map="auto" if has_cuda else None,
     ).eval()
     return TutorialModel(model=model, tokenizer=tokenizer, model_id=model_id)

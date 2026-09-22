@@ -16,6 +16,19 @@ The default model is `Qwen/Qwen2.5-0.5B-Instruct`. It is downloaded from
 Hugging Face and fits the free-T4 target. The tutorial artifact is downloaded
 anonymously from the public dataset `krispri/slm-jspace-tutorial-artifacts`.
 
+## Runtime profiles
+
+- **Notebooks 1–3:** use Colab's standard CPU runtime by default. Notebook 1
+  loads Qwen 0.5B, so a GPU is optional when faster generation is useful.
+- **Notebook 4:** choose a GPU runtime before executing it. A free T4 is
+  sufficient for the deliberately tiny demonstration fit.
+
+The setup cells preserve Colab's preinstalled PyTorch and CUDA build instead
+of downloading a second CUDA stack. They print the selected device and choose
+FP16 on a T4/Turing GPU and BF16 on Ampere-or-newer hardware. Do not add
+`%load_ext cuml.accel`: these notebooks do not import scikit-learn and their
+small NumPy SVD is not accelerated by that extension.
+
 ## Open in Colab
 
 - [01 — visible reasoning](https://colab.research.google.com/github/prithvimk/slm-jspace-viewer/blob/feature/colab-jspace-tutorial/notebooks/01_prerequisites_and_visible_reasoning.ipynb)
