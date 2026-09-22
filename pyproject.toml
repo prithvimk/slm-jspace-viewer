@@ -3,7 +3,10 @@ name = "slm-jspace-viewer"
 version = "0.1.0"
 description = "Offline viewer and reproducible artifact pipeline for Gemma Jacobian-lens experiments."
 readme = "README.md"
-requires-python = ">=3.11,<3.13"
+# Colab kernels currently ship with Python 3.12 or 3.13 depending on the
+# runtime image. Keep the tutorial installable in both without requiring a
+# separate Python interpreter.
+requires-python = ">=3.11,<3.14"
 dependencies = [
   "datasets>=4.0",
   "huggingface-hub>=0.30",
