@@ -7,7 +7,18 @@ from pathlib import Path
 if __name__ == "__main__":
     destination = Path("/tmp/slm-jspace-colab-requirements.txt")
     subprocess.run(
-        ["uv", "export", "--locked", "--no-hashes", "--no-dev", "--group", "tutorial", "--output-file", str(destination)],
+        [
+            "uv",
+            "export",
+            "--locked",
+            "--no-hashes",
+            "--no-dev",
+            "--group",
+            "tutorial",
+            "--no-emit-project",
+            "--output-file",
+            str(destination),
+        ],
         check=True,
     )
     print(destination)
