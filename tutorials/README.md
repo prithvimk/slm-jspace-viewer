@@ -23,11 +23,12 @@ anonymously from the public dataset `krispri/slm-jspace-tutorial-artifacts`.
 - **Notebook 4:** choose a GPU runtime before executing it. A free T4 is
   sufficient for the deliberately tiny demonstration fit.
 
-The setup cells preserve Colab's preinstalled PyTorch and CUDA build instead
-of downloading a second CUDA stack. They print the selected device and choose
-FP16 on a T4/Turing GPU and BF16 on Ampere-or-newer hardware. Do not add
-`%load_ext cuml.accel`: these notebooks do not import scikit-learn and their
-small NumPy SVD is not accelerated by that extension.
+The setup cells install only the five libraries the public notebooks need and
+preserve Colab's preinstalled PyTorch, NumPy, Jupyter, and Google integration
+packages. They print the selected device and choose FP16 on a T4/Turing GPU
+and BF16 on Ampere-or-newer hardware. Do not add `%load_ext cuml.accel`:
+these notebooks do not import scikit-learn and their small NumPy SVD is not
+accelerated by that extension.
 
 ## Open in Colab
 
